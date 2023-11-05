@@ -229,6 +229,14 @@
     Player.prototype.draw = function(){
         Game.ctx.fillStyle = this.color;
         Game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        const gradient = Game.ctx.createLinearGradient(0, 0, window.innerWidth, 0);
+        gradient.addColorStop("0", "magenta");
+        gradient.addColorStop("0.5", "blue");
+        gradient.addColorStop("1.0", "red");
+
+        Game.ctx.fillStyle = gradient;
+        Game.ctx.font = "bold 13px Lato, sans-serif";
+        Game.ctx.fillText("Anciano", this.x+2, this.y+16);
     };
     
     
@@ -313,6 +321,9 @@
     Enemy.prototype.draw = function(){
         Game.ctx.fillStyle = this.color;
         Game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        Game.ctx.fillStyle = "black";
+        Game.ctx.font = "bold 13px Lato, sans-serif";
+        Game.ctx.fillText("Apostata", this.x+2, this.y+16);
     };
     
     
@@ -360,6 +371,10 @@
         for(var i=0; i<Game.maxParticles; i++){
         new Particle(this.x + this.width/2, this.y, this.color);
       }
+      for (var i=0; i<Game.maxParticles; i++){
+        const pruebaSola = new Prueba(Game.c, this.color);
+        pruebaSola.draw();
+      }
     };
     
     Enemy.prototype.shoot = function(){
@@ -391,7 +406,12 @@
     };
     
     
-    
+    var Prueba=function(c, color){
+        this.particles= new Particle(c.width*Math.random(), c.height*Math.random(), color);
+    };
+    Prueba.prototype.draw = function(){
+        this.particles.draw();
+    };
     
     var Particle = function(x, y, color){
         this.x = x;
